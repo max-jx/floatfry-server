@@ -1,6 +1,6 @@
 //DbEx0sSlD2xiHkNY
 
-import {MongoClient, ServerApiVersion} from "mongodb"
+import {Int32, MongoClient, ServerApiVersion} from "mongodb"
 import dotenv from "dotenv";
 import mongoose, {Schema} from "mongoose";
 
@@ -85,13 +85,19 @@ const ProductMaterialsSchema = new Schema({
     quantity: Number
 })
 
+const ProductMachineSchema = new Schema({
+    index: Int32,
+    machine: String,
+    time: Number
+})
+
 const DesignSpecSchema = new Schema({
     materials: [ProductMaterialsSchema],
     supportingDocuments: [FileSchema]
 })
 
 const ManufacturingInstructionSchema = new Schema({
-    machines: [String],
+    machines: [ProductMachineSchema],
     supportingDocuments: [FileSchema]
 })
 
@@ -100,21 +106,21 @@ const ProductColorSchema = new Schema({
     name: String,
     color: String,
     materials: [ProductMaterialsSchema],
-    machines: [String]
+    machines: [ProductMachineSchema]
 })
 
-const ProductLidMaterialSchema = new Schema({
+    const ProductLidMaterialSchema = new Schema({
     id: String,
     name: String,
     materials: [ProductMaterialsSchema],
-    machines: [String]
+    machines: [ProductMachineSchema]
 })
 
 const ProductHandleMaterialSchema = new Schema({
     id: String,
     name: String,
     materials: [ProductMaterialsSchema],
-    machines: [String]
+    machines: [ProductMachineSchema]
 })
 
 const ProductSchema = new Schema({
@@ -177,8 +183,7 @@ export const MachineProjection = ["-_id"]
 const FactoryMachineSchema = new Schema({
     id: String,
     name: String,
-    machineType: String,
-    jobUri: String,
+    machine: String,
 })
 
 export const FactoryMachine = mongoose.model("FactoryMachine", FactoryMachineSchema, "FactoryMachines")
@@ -196,6 +201,37 @@ const OrderSchema = new Schema({
 export const Order = mongoose.model("Order", OrderSchema, "Orders")
 
 export const OrderProjection = ["-_id"]
+
+const SaleSchema = new Schema({
+    id: String,
+    product: String,
+    date: Date,
+    color: String,
+    lidMaterial: String,
+    handleMaterial: String,
+    status: String
+})
+
+export const Sale = mongoose.model("Sale", SaleSchema, "Sales")
+
+export const SalesProjection = ["-_id"]
+
+const JobSchema = new Schema({
+    id: String,
+    product: String,
+    employee: String,
+    machine: String,
+    time: Date,
+    duration: Number,
+    date: Date,
+    shift: Number,
+})
+
+export const Job = mongoose.model("Job", JobSchema, "Jobs")
+
+export const JobProjection = ["-_id"]
+
+
 
 
 // const employee = await Employee.findOne({id: "josephm"}).exec()

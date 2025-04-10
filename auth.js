@@ -20,7 +20,7 @@ export function verifyPassword(password, hash) {
 
 
 export function generateJwt(id, role) {
-    const token = jwt.sign({id, role}, "secretKey", {expiresIn: "5s"})
+    const token = jwt.sign({id, role}, "secretKey", {expiresIn: "1hr"})
 
     return token
 }
