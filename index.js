@@ -33,6 +33,7 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 
+
 app.use(["/data", "/activate"], (req, res, next) => {
     const authorization = req.header("Authorization")
 
